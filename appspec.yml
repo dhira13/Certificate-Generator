@@ -1,17 +1,31 @@
 version: 0.0
 os: linux
 files:
-  - source: /index.html
-    destination: /var/www/html/
+  - source: /                # Path within the revision
+    destination: /var/www/html    # Destination path on the instance
+    overwrite: true
+
 hooks:
   BeforeInstall:
-    - location: scripts/install_dependencies
+    - location: scripts/install_dependencies.sh
       timeout: 300
       runas: root
-    - location: scripts/start_server
+
+  AfterInstall:
+    - location: scripts/change_permissions.sh
+      timeout: 300
+      runas: root
+
+  ApplicationStart:
+    - location: scripts/start_server.sh
       timeout: 300
       runas: root
   ApplicationStop:
     - location: scripts/stop_server
       timeout: 300
       runas: root
+  ValidateService:
+    - location: scripts/verify_service.sh
+      timeout: 300
+      runas: root
+  
