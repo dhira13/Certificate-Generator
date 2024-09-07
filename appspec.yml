@@ -1,7 +1,7 @@
 version: 0.0
 os: linux
 files:
-  - source: /                # Path within the revision
+  - source: /build                # Path within the revision
     destination: /var/www/html    # Destination path on the instance
     overwrite: true
 
